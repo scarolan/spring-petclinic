@@ -86,3 +86,15 @@ checkFormatAotTest.enabled = false
 
 formatAot.enabled = false
 formatAotTest.enabled = false
+
+// Custom task to run Spring Boot with Grafana OpenTelemetry Java agent
+tasks.register('bootRunWithOtel', JavaExec) {
+  group = 'application'
+  description = 'Run the Spring Boot application with Grafana OpenTelemetry Java agent'
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'org.springframework.samples.petclinic.PetClinicApplication'
+  jvmArgs = [
+    "-javaagent:otel/grafana-opentelemetry-java.jar",
+    "-Dotel.javaagent.configuration-file=src/main/resources/otel-config.properties"
+  ]
+}
